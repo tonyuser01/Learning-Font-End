@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science Courses - Online Learning Platform</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div id="modal-container" class="modal-container"></div>
+    <div id="profile-modal" class="modal-container">
+        <div class="modal">
+            <div class="modal-content">
+                <h2>My Profile</h2>
+                <div id="enrolled-courses">
+                    <h3>Enrolled Courses</h3>
+                    <div id="enrolled-courses-list">
+                        <p>No courses enrolled yet.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span class="hamburger"></span>
+        </button>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="has-submenu">
+                    <a href="gallery.html">Courses</a>
+                    <ul class="submenu">
+                        <li><a href="web-development.html">Web Development</a></li>
+                        <li><a href="data-science.html">Data Science</a></li>
+                        <li><a href="design.html">Design</a></li>
+                        <li><a href="marketing.html">Marketing</a></li>
+                    </ul>
+                </li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="contacts.html">Contacts</a></li>
+                <li>
+                    <button id="profile-btn" class="profile-button">Profile</button>
+                </li>
+            </ul>
+        </nav>
+        <div class="site-title-container">
+            <h1 class="site-title">Pugs Online</h1>
+        </div>
+    </header>
+
+    <main class="data-science">
+        <!-- Enhanced Hero Section -->
+        <section class="hero-section data-science-hero">
+            <div class="hero-content">
+                <h1>Master Data Science</h1>
+                <p>From beginner to professional: Learn modern data science with hands-on projects and expert guidance.</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="number">50+</span>
+                        <span class="label">Projects</span>
+                    </div>
+                    <div class="stat">
+                        <span class="number">1000+</span>
+                        <span class="label">Students</span>
+                    </div>
+                    <div class="stat">
+                        <span class="number">24/7</span>
+                        <span class="label">Support</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning Path Section -->
+        <section class="learning-path">
+            <h2>Your Data Science Journey</h2>
+            <div class="path-container">
+                <div class="path-step">
+                    <div class="step-number">1</div>
+                    <h3>Foundations</h3>
+                    <p>Python and Data Basics</p>
+                    <ul>
+                        <li>Python Programming</li>
+                        <li>Statistics Fundamentals</li>
+                        <li>Data Manipulation</li>
+                    </ul>
+                </div>
+                <div class="path-step">
+                    <div class="step-number">2</div>
+                    <h3>Advanced Analysis</h3>
+                    <p>Data Analysis Tools</p>
+                    <ul>
+                        <li>Pandas & NumPy</li>
+                        <li>Data Visualization</li>
+                        <li>Statistical Analysis</li>
+                    </ul>
+                </div>
+                <div class="path-step">
+                    <div class="step-number">3</div>
+                    <h3>Machine Learning</h3>
+                    <p>AI and ML Techniques</p>
+                    <ul>
+                        <li>Scikit-learn</li>
+                        <li>TensorFlow</li>
+                        <li>Deep Learning</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Courses -->
+        <section class="featured-courses">
+            <h2>Featured Data Science Courses</h2>
+            <div class="course-grid">
+                <!-- Course cards will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <!-- Technologies Section -->
+        <section class="technologies">
+            <h2>Technologies You'll Master</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <i class="tech-icon python"></i>
+                    <h3>Python</h3>
+                </div>
+                <div class="tech-item">
+                    <i class="tech-icon pandas"></i>
+                    <h3>Pandas</h3>
+                </div>
+                <div class="tech-item">
+                    <i class="tech-icon numpy"></i>
+                    <h3>NumPy</h3>
+                </div>
+                <div class="tech-item">
+                    <i class="tech-icon scikit"></i>
+                    <h3>Scikit-learn</h3>
+                </div>
+                <div class="tech-item">
+                    <i class="tech-icon tensorflow"></i>
+                    <h3>TensorFlow</h3>
+                </div>
+                <div class="tech-item">
+                    <i class="tech-icon jupyter"></i>
+                    <h3>Jupyter</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Learn Section -->
+        <section class="why-learn">
+            <h2>Why Learn Data Science?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="benefit-icon career"></i>
+                    <h3>High Career Demand</h3>
+                    <p>Data Scientists are among the most sought-after professionals globally</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="benefit-icon creative"></i>
+                    <h3>Problem Solving</h3>
+                    <p>Solve complex real-world problems with data-driven insights</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="benefit-icon salary"></i>
+                    <h3>Competitive Salary</h3>
+                    <p>Enjoy excellent compensation in the growing field of data science</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="benefit-icon remote"></i>
+                    <h3>Work Flexibility</h3>
+                    <p>Work remotely with data from anywhere in the world</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Student Success Stories -->
+        <section class="success-stories">
+            <h2>Student Success Stories</h2>
+            <div class="stories-carousel">
+                <div class="story-card">
+                    <img src="../images/pug1.jpg" alt="Student Portrait" class="student-image">
+                    <blockquote>
+                        "This course helped me transition from a business analyst to a data scientist at a leading tech company."
+                    </blockquote>
+                    <p class="student-name">- Sarah Chen</p>
+                    <p class="student-role">Data Scientist at TechCorp</p>
+                </div>
+                <!-- Add more success stories as needed -->
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="call-to-action">
+            <div class="cta-content">
+                <h2>Ready to Start Your Data Science Journey?</h2>
+                <p>Join thousands of students already learning with us</p>
+                <div class="cta-buttons">
+                    <a href="gallery.html" class="btn-primary">Browse Courses</a>
+                    <a href="#" class="btn-secondary">View Free Resources</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Pugs Online.All rights reserved</p>
+    </footer>
+
+    <script type="module" src="../js/script.js"></script>
+    <script type="module" src="../js/data-science.js"></script>
+</body>
+
+</html>

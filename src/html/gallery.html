@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Online Learning Platform</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span class="hamburger"></span>
+        </button>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="has-submenu">
+                    <a href="gallery.html">Courses</a>
+                    <ul class="submenu">
+                        <li><a href="web-development.html">Web Development</a></li>
+                        <li><a href="data-science.html">Data Science</a></li>
+                        <li><a href="design.html">Design</a></li>
+                        <li><a href="marketing.html">Marketing</a></li>
+                    </ul>
+                </li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="contacts.html">Contacts</a></li>
+                <li>
+                    <button id="profile-btn" class="profile-button">Profile</button>
+                </li>
+            </ul>
+        </nav>
+        <div class="site-title-container">
+            <h1 class="site-title">Pugs Online</h1>
+        </div>
+    </header>
+
+    <main>
+        <h1>Course Gallery</h1>
+        <p>Browse our available courses.</p>
+
+        <form id="search-form">
+            <input id="search-bar" type="search" placeholder="Search courses..." aria-label="Search courses">
+            <button id="search-button" type="button">Search</button>
+        </form>
+
+        <div class="gallery-header">
+            <div class="filter-buttons">
+                <button class="filter-button" data-filter="ALL">ALL</button>
+                <button class="filter-button" data-filter="Web Development">Web Development</button>
+                <button class="filter-button" data-filter="Data Science">Data Science</button>
+                <button class="filter-button" data-filter="Design">Design</button>
+                <button class="filter-button" data-filter="Marketing">Marketing</button>
+            </div>
+            <div class="sorting-dropdown">
+                <select>
+                    <option value="alphabetical">Alphabetical</option>
+                    <option value="date">Date</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="gallery-container" class="gallery-container">
+            <p>Loading courses...</p>
+        </div>
+        <div id="pagination-controls"></div>
+    </main>
+    <div id="modal-container" class="modal-container"></div>
+
+    <div id="profile-modal" class="modal-container">
+        <div class="modal">
+            <div class="modal-content">
+                <h2>My Profile</h2>
+                <div id="enrolled-courses">
+                    <h3>Enrolled Courses</h3>
+                    <div id="enrolled-courses-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Pugs Online. All rights reserved.</p>
+    </footer>
+    <script type="module" src="../js/script.js"></script>
+    <script type="module" src="../js/gallery.js"></script>
+</body>
+</html>

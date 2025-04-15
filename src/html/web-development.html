@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development Courses - Online Learning Platform</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div id="modal-container" class="modal-container"></div>
+    <div id="profile-modal" class="modal-container">
+        <div class="modal">
+            <div class="modal-content">
+                <h2>My Profile</h2>
+                <div id="enrolled-courses">
+                    <h3>Enrolled Courses</h3>
+                    <div id="enrolled-courses-list">
+                        <p>No courses enrolled yet.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <!-- Hamburger Menu for smaller screens -->
+        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span class="hamburger"></span>
+        </button>
+
+        <!-- Main Navigation Menu -->
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="has-submenu">
+                    <a href="gallery.html">Courses</a>
+                    <ul class="submenu">
+                        <li><a href="web-development.html">Web Development</a></li>
+                        <li><a href="data-science.html">Data Science</a></li>
+                        <li><a href="design.html">Design</a></li>
+                        <li><a href="marketing.html">Marketing</a></li>
+                    </ul>
+                </li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="contacts.html">Contacts</a></li>
+                <li>
+                    <button id="profile-btn" class="profile-button">Profile</button>
+                </li>
+            </ul>
+        </nav>
+        <div class="site-title-container">
+            <h1 class="site-title">Pugs Online</h1>
+        </div>
+    </header>
+
+    <main>
+        <!-- Enhanced Hero Section -->
+        <section class="hero-section web-dev-hero">
+            <div class="hero-content">
+                <h1>Master Web Development</h1>
+                <p>From beginner to professional: Learn modern web development with hands-on projects and expert guidance.</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="number">50+</span>
+                        <span class="label">Projects</span>
+                    </div>
+                    <div class="stat">
+                        <span class="number">1000+</span>
+                        <span class="label">Students</span>
+                    </div>
+                    <div class="stat">
+                        <span class="number">24/7</span>
+                        <span class="label">Support</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning Path Section -->
+        <section class="learning-path">
+            <h2>Your Web Development Journey</h2>
+            <div class="path-container">
+                <div class="path-step">
+                    <div class="step-number">1</div>
+                    <h3>Foundations</h3>
+                    <p>HTML, CSS, and JavaScript basics</p>
+                    <ul>
+                        <li>Structure with HTML5</li>
+                        <li>Styling with CSS3</li>
+                        <li>JavaScript fundamentals</li>
+                    </ul>
+                </div>
+                <div class="path-step">
+                    <div class="step-number">2</div>
+                    <h3>Advanced Concepts</h3>
+                    <p>Modern web development tools</p>
+                    <ul>
+                        <li>Responsive Design</li>
+                        <li>CSS Frameworks</li>
+                        <li>JavaScript ES6+</li>
+                    </ul>
+                </div>
+                <div class="path-step">
+                    <div class="step-number">3</div>
+                    <h3>Frameworks</h3>
+                    <p>Popular frameworks and libraries</p>
+                    <ul>
+                        <li>React.js</li>
+                        <li>Node.js</li>
+                        <li>Express.js</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Courses with enhanced cards -->
+        <section class="featured-courses">
+            <h2>Featured Web Development Courses</h2>
+            <div class="course-grid">
+                <article class="course-card">
+                    <div class="card-badge">Bestseller</div>
+                    <img src="../images/pug1.jpg" alt="Introduction to Web Development">
+                    <div class="card-content">
+                        <h3>Introduction to Web Development</h3>
+                        <p class="card-instructor">Instructor: Jane Doe</p>
+                        <div class="card-details">
+                            <span class="difficulty">Beginner</span>
+                            <span class="duration">12 weeks</span>
+                            <span class="rating">⭐ 4.8 (2.1k reviews)</span>
+                        </div>
+                        <p class="card-description">Master the fundamentals of web development with HTML, CSS, and JavaScript. Build real-world projects and establish a strong foundation.</p>
+                        <button class="view-details-button" data-course-id="1">View Details</button>
+                    </div>
+                </article>
+
+                <article class="course-card">
+                    <img src="../images/pug2.jpg" alt="Advanced CSS Techniques">
+                    <div class="card-content">
+                        <h3>Advanced CSS Techniques</h3>
+                        <p class="card-instructor">Instructor: John Smith</p>
+                        <div class="card-details">
+                            <span class="difficulty">Intermediate</span>
+                            <span class="duration">8 weeks</span>
+                            <span class="rating">⭐ 4.9 (1.5k reviews)</span>
+                        </div>
+                        <p class="card-description">Take your CSS skills to the next level with advanced layouts, animations, and modern CSS features.</p>
+                        <button class="view-details-button" data-course-id="2">View Details</button>
+                    </div>
+                </article>
+
+                <article class="course-card">
+                    <div class="card-badge">New</div>
+                    <img src="../images/pug3.jpg" alt="React for Beginners">
+                    <div class="card-content">
+                        <h3>React for Beginners</h3>
+                        <p class="card-instructor">Instructor: Sarah Wilson</p>
+                        <div class="card-details">
+                            <span class="difficulty">Intermediate</span>
+                            <span class="duration">10 weeks</span>
+                            <span class="rating">⭐ 4.7 (980 reviews)</span>
+                        </div>
+                        <p class="card-description">Learn React.js from scratch and build modern, interactive web applications.</p>
+                        <button class="view-details-button" data-course-id="3">View Details</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Technologies Section -->
+        <section class="technologies">
+            <h2>Technologies You'll Master</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <i class="tech-icon html5"></i>
+                    <h3>HTML5</h3>
+                </div>
+                <div class="tech-item">
+                    <i class="tech-icon css3"></i>
+                    <h3>CSS3</h3>
+                </div>
+                <div class="tech-item">
+                    <i class="tech-icon javascript"></i>
+                    <h3>JavaScript</h3>
+                </div>
+                <div class="tech-item">
+                    <i class="tech-icon react"></i>
+                    <h3>React</h3>
+                </div>
+                <div class="tech-item">
+                    <i class="tech-icon node"></i>
+                    <h3>Node.js</h3>
+                </div>
+                <div class="tech-item">
+                    <i class="tech-icon git"></i>
+                    <h3>Git</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enhanced Why Learn Section -->
+        <section class="why-learn">
+            <h2>Why Learn Web Development?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="benefit-icon career"></i>
+                    <h3>High Career Demand</h3>
+                    <p>Web developers are among the most sought-after professionals in tech</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="benefit-icon creative"></i>
+                    <h3>Creative Freedom</h3>
+                    <p>Build and design websites exactly as you envision them</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="benefit-icon salary"></i>
+                    <h3>Competitive Salary</h3>
+                    <p>Enjoy excellent compensation and benefits in the industry</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="benefit-icon remote"></i>
+                    <h3>Work Flexibility</h3>
+                    <p>Work remotely from anywhere in the world</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Student Success Stories -->
+        <section class="success-stories">
+            <h2>Student Success Stories</h2>
+            <div class="stories-carousel">
+                <div class="story-card">
+                    <img src="../images/pug1.jpg" alt="Student Portrait" class="student-image">
+                    <blockquote>
+                        "This course helped me land my dream job as a frontend developer at a top tech company."
+                    </blockquote>
+                    <p class="student-name">- Alex Johnson</p>
+                    <p class="student-role">Frontend Developer at TechCorp</p>
+                </div>
+                <!-- Add more success stories as needed -->
+            </div>
+        </section>
+
+        <!-- Enhanced Call to Action -->
+        <section class="call-to-action">
+            <div class="cta-content">
+                <h2>Ready to Start Your Web Development Journey?</h2>
+                <p>Join thousands of students already learning with us</p>
+                <div class="cta-buttons">
+                    <button onclick="window.location.href='gallery.html'" class="btn-primary">Browse Courses</button>
+                    <button class="btn-secondary">View Free Resources</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Pugs Online.All rights reserved</p>
+    </footer>
+
+    <script type="module" src="../js/script.js"></script>
+    <script type="module" src="../js/web-development.js"></script>
+</body>
+
+</html>

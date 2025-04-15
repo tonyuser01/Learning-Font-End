@@ -1,0 +1,2337 @@
+@use "sass:color";
+
+/* SCSS Variables */
+
+// Breakpoints
+$breakpoint-medium: 768px;
+$breakpoint-small: 576px;
+
+// Colors
+$color-primary: #333;       // Dark grey for header/nav bg
+$color-secondary: #555;     // Slightly lighter grey for hover
+$color-tertiary: #444;      // Submenu background
+$color-accent: #a1c4fd;     // Example accent (using slide 1 color for now)
+$color-light: #fff;         // White text/elements
+$color-dark: #333;          // Dark text (can be same as primary)
+$color-light-grey: #f4f4f4; // Footer background
+$color-border: #ccc;        // Borders
+$background-color: #f8f9fa;
+$color-accent-dark: #a1c4fd;
+$color-danger: #f44;        // Base danger color
+$color-danger-dark: #c00;   // Darker shade for hover
+$color-border-light: #d4d4d4;
+$color-success: #28a745;        // Standard success green
+$color-success-dark: #218838;   // Darker shade for hover states
+// Fonts
+$font-primary: sans-serif;
+$font-secondary: serif;     // Example for headings if needed
+
+// Additional Mixins
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin responsive-grid($columns) {
+    display: grid;
+    grid-template-columns: repeat($columns, 1fr);
+    gap: 20px;
+    
+    @media (max-width: $breakpoint-medium) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @media (max-width: $breakpoint-small) {
+        grid-template-columns: 1fr;
+    }
+}
+
+@mixin card-style {
+    background: $color-light;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    
+    &:hover {
+        transform: translateY(-5px);
+    }
+}
+
+/* ----------------------------------------------------------------------------------- */
+
+/*                                    Mixins                                         */
+
+/* ----------------------------------------------------------------------------------- */
+
+@mixin button-reset { // A mixin to remove default button styles
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-family: inherit; // Use the body's font
+    color: inherit; // Use the surrounding text color
+    cursor: pointer;
+    text-align: inherit;
+}
+
+@mixin button-base($bg-color: $color-secondary, $text-color: $color-light, $padding: 0.5rem 1rem) {
+    // A mixin for basic button appearance
+    @include button-reset; // Include the reset styles first
+
+    display: inline-block; // Allow padding/margin
+    background-color: $bg-color;
+    color: $text-color;
+    padding: $padding;
+    border-radius: 4px;
+    text-decoration: none; // In case it's used on an <a> tag styled as a button
+    transition: opacity 0.3s ease, background-color 0.3s ease; // Basic transitions
+
+    &:hover {
+        opacity: 0.85; // Example hover effect
+    }
+}
+
+@mixin card-style($bg-color: $color-light, $border-color: $color-border, $padding: 1rem, $shadow: 0 2px 4px rgba($color-dark, 0.1)) {
+    background-color: $bg-color;
+    border: 1px solid $border-color;
+    padding: $padding;
+    box-shadow: $shadow;
+    border-radius: 4px;
+}
+
+@mixin text-style($font-size: 1rem, $line-height: 1.5, $font-weight: normal, $color: $color-dark, $margin-bottom: 0) {
+    font-size: $font-size;
+    line-height: $line-height;
+    font-weight: $font-weight;
+    color: $color;
+    margin-bottom: $margin-bottom;
+}
+
+@mixin heading-style($font-size: 2rem, $line-height: 1.2, $font-weight: bold, $color: $color-dark, $margin-bottom: 1rem) {
+    font-size: $font-size;
+    line-height: $line-height;
+    font-weight: $font-weight;
+    color: $color;
+    margin-bottom: $margin-bottom;
+}
+
+/* ----------------------------------------------------------------------------------- */
+
+/*                                    Base Styles                                    */
+
+/* ----------------------------------------------------------------------------------- */
+
+/* Basic Reset / Normalize */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: $font-primary; // Choose a better font later
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+/* ----------------------------------------------------------------------------------- */
+
+/*                                    Header                                         */
+
+/* ----------------------------------------------------------------------------------- */
+
+/* Header Styling */
+header {
+    background-color:$color-primary; // Dark background for header
+    color: $color-light; // White text for header content (like nav links)
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+/* Navigation Toggle Button */
+.nav-toggle {
+    @include button-reset; // <-- INCLUDE RESET HERE
+
+    display: none; // <-- Base style is hidden
+    color: $color-light;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    position: absolute;
+    right: 1rem;
+    top: 0.8rem;
+    z-index: 20; // Ensure it's above other elements
+    transition: all 0.3s ease-in-out;
+
+    // Basic hamburger icon lines using the span and pseudo-elements
+    .hamburger,
+    .hamburger::before,
+    .hamburger::after {
+        content: '';
+        display: block;
+        background-color: $color-light; // Line color
+        height: 3px; // Line thickness
+        width: 25px; // Line width
+        border-radius: 3px;
+        transition: all 0.3s ease-in-out; // Smooth transition for later (e.g., changing to 'X')
+    }
+
+    .hamburger::before {
+        transform: translateY(-8px); // Position top line
+    }
+
+    .hamburger::after {
+        transform: translateY(5px); // Position bottom line (adjust spacing from middle line)
+    }
+}
+
+/* Navigation Styling */
+.main-nav {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    
+    ul {
+        list-style: none;
+        display: flex;
+        justify-content: space-around;
+        padding: 0 2rem;
+        margin: 0;
+        margin-bottom: 0;
+        transition: transform 0.3s ease-in-out;
+        align-items: center;
+        gap: 2rem;
+
+        li {
+            margin: 0 1rem;
+            position: relative;
+
+            a {
+                color: $color-light;
+                text-decoration: none;
+                padding: 0.5rem;
+                display: block;
+
+                &:hover {
+                    background-color: $color-secondary;
+                    border-radius: 4px;
+                }
+            }
+
+            .submenu {
+                display: none;
+                position: absolute;
+                left: 0;
+                top: 100%;
+                background-color: $color-tertiary;
+                padding: 0.5rem 0;
+                list-style: none;
+                min-width: 150px;
+                z-index: 15;
+                box-shadow: 0 8px 16px 0 rgb(0 0 0 / 20%);
+                border-radius: 4px;
+                transition: all 0.3s ease-in-out;
+
+                li {
+                    margin: 0;
+
+                    a {
+                        display: block;
+                        padding: 0.5rem 1rem;
+                        white-space: nowrap;
+                        border-radius: 0;
+
+                        &:hover {
+                            background-color: $color-secondary;
+                        }
+                    }
+                }
+            }
+
+            &:hover .submenu {
+                display: block;
+            }
+        }
+    }
+
+    /* Mobile styles */
+    @media (max-width: ($breakpoint-medium - 1px)) {
+        ul {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: $color-primary;
+            padding: 1rem 0;
+            align-items: center;
+            z-index: 10;
+
+            li {
+                margin: 0.5rem 0;
+
+                .submenu {
+                    position: static;
+                    text-align: center;
+                    background-color: $color-tertiary;
+                    width: 100%;
+                    padding: 0.5rem 0;
+                    border: none;
+                }
+
+                &:hover .submenu {
+                    display: none;
+                }
+            }
+        }
+
+        &.is-open ul {
+            display: flex;
+        }
+    }
+}
+
+.site-title-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+    pointer-events: none; // This allows clicking through the title to elements behind it
+
+    .site-title {
+        color: $color-accent;
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+}
+
+@media (width <= 768px) {
+    .site-title-container {
+        display: none; // Hide title on mobile
+    }
+    
+    .nav-open .site-title-container {
+        display: block; // Show title when menu is open
+        position: static;
+        transform: none;
+        margin: 1rem 0;
+    }
+}
+
+.profile-icon {
+    width: 20px;
+    height: 20px;
+    border: 2px solid currentcolor;
+    border-radius: 50%;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+
+    &::after {
+        content: '';
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border: 2px solid currentcolor;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -90%);
+    }
+}
+
+.profile-button {
+    background-color: $color-secondary;
+    color: $color-light;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &:hover {
+        background-color: $color-accent-dark;
+    }
+}
+
+.enrolled-course-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    
+    .remove-course {
+        background-color: $color-danger;
+        color: $color-light;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+        
+        &:hover {
+            background-color: $color-danger-dark;
+        }
+    }
+}
+
+/* Navigation Styling */
+.main-nav {
+    ul { // Target the main UL directly inside .main-nav
+        list-style: none; // Remove default list bullets
+        display: flex; // ** Make list items align horizontally (desktop default) **
+        justify-content: space-around;
+        padding: 0 2rem; // Remove default padding on UL
+        margin-bottom: 0; // Remove default margin on UL
+        transition: transform 0.3s ease-in-out;
+        align-items: center; // Add this to vertically align items
+
+        li { // Target list items inside the main UL
+            margin: 0 1rem; // Add space between menu items
+            position: relative; // Needed for absolute positioning of submenu
+
+            a { // Target links inside the list items
+                color: $color-light; // White link text
+                text-decoration: none; // Remove underline from links
+                padding: 0.5rem; // Add some clickable area
+                display: block; // Ensure padding applies correctly
+
+                &:hover { // Style links on hover
+                    background-color: $color-secondary; // Slightly lighter background on hover
+                    border-radius: 4px;
+                }
+            }
+
+            /* Basic Submenu Styling (Desktop) */
+            .submenu {
+                display: none; // ** Hide submenu by default **
+                position: absolute; // Take submenu out of normal flow for positioning
+                left: 0; // Align with parent li
+                top: 100%; // Position below parent li
+                background-color: $color-tertiary; // Background for submenu
+                padding: 0.5rem 0; // Padding top/bottom
+                list-style: none; // Remove bullets from submenu
+                min-width: 150px; // Give submenu a minimum width
+                z-index: 15; // Ensure submenu is above content below header
+                box-shadow: 0 8px 16px 0 rgb(0 0 0 / 20%); // Add a shadow
+                border-radius: 4px; // Add a border radius
+                transition: all 0.3s ease-in-out;
+
+                li {
+                    margin: 0; // Reset margin for submenu items
+
+                    a {
+                        display: block; // Make submenu links take full width
+                        padding: 0.5rem 1rem; // Padding for submenu links
+                        white-space: nowrap; // Prevent submenu text wrapping
+                        border-radius: 0; // Reset border-radius from main nav hover
+
+                         &:hover {
+                            background-color: $color-secondary; // Hover background for submenu links
+                        }
+                    }
+                }
+            }
+
+            /* Show submenu on hover of parent LI (Simple CSS method - Desktop) */
+            &:hover .submenu {
+                display: block; // Show the submenu when hovering over the parent LI
+            }
+        } // End of li styles
+    } // End of ul styles
+
+
+    /* ---- Media Query for SMALLER screens, nested inside .main-nav ---- */
+
+    /* Overrides styles for elements INSIDE .main-nav */
+    @media (max-width: ($breakpoint-medium - 1px)) {
+        ul { // Target the ul specifically within .main-nav inside the media query
+            display: none; // ** Hide the list by default on small screens **
+            flex-direction: column; // Stack items when shown
+            position: absolute; // Position relative to header
+            top: 100%; // Position below header
+            left: 0;
+            width: 100%;
+            background-color: $color-primary; // Give it a background when open
+            padding: 1rem 0; // Add padding when open
+            align-items: center; // Center items when open
+            z-index: 10; // Ensure nav is above main content but below toggle
+
+            li { // Target li inside the ul inside the media query
+                margin: 0.5rem 0; // Adjust margin for vertical layout
+
+                .submenu { // Target submenu inside li inside ul inside media query
+                    position: static; // ** Change submenu to stack below parent **
+                    text-align: center;
+                    background-color: $color-tertiary; // Slightly different background
+                    width: 100%;
+                    padding: 0.5rem 0;
+                    border: none;
+
+                    // No need for hover display change here, parent ul controls visibility
+                }
+
+                 /* Disable desktop hover effect for submenu on small screens */
+
+                 /* as parent ul controls visibility */
+                 &:hover .submenu {
+                    display: none; // Keep hidden unless parent ul is shown via JS
+                 }
+
+            } // End of li styles within @media
+        } // End of ul styles within @media
+
+        //*********************************************//
+        //*** THIS IS THE ADDED RULE FOR THE TOGGLE ***//
+        //*********************************************//
+        &.is-open ul { //  Target .main-nav when it ALSO has .is-open
+            display: flex; // Or display: block; // Show the menu using flex layout
+        }
+
+        //*********************************************//
+
+    } // End of @media query nested inside .main-nav
+
+    /* ------------------------------------------------------------------ */
+
+} //  End of .main-nav styles
+
+
+/* ---- Separate Media Query for the Toggle Button ---- */
+
+/* Controls element OUTSIDE .main-nav */
+@media (max-width: ($breakpoint-medium - 1px)) {
+    .nav-toggle {
+        display: block; // ** Show toggle on small screens **
+    }
+
+    .slide {
+        height: 300px; // Reduce height on smaller screens
+    }
+
+    //  Adjust font size in other-content if needed
+    .other-content h2 {
+         font-size: 1.5rem;
+    }
+}
+
+ /* ---------------------------------------------------- */
+
+/* ----------------------------------------------------------------------------------- */
+
+/*                                    Hero Slider                                    */
+
+/* ----------------------------------------------------------------------------------- */
+
+/* Hero Slider Styles */
+.hero-slider {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    border: 1px solid $color-border;
+    background-color: $color-light-grey;
+    overflow: hidden;
+
+    .slider-container {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        width: 100%; // Changed from 300% to 100%
+        transform: translateX(0); // Reset transform
+
+        .slide {
+            flex: 0 0 100%; // Use flex instead of min-width
+            height: 600px;
+            position: relative;
+            overflow: hidden;
+            display: flex; // Add flex display
+            justify-content: center; // Center horizontally
+            align-items: center; // Center vertically
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center center;
+                display: block; // Ensure block display
+            }
+        }
+    }
+
+    .slider-control {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba($color-dark, 0.5);
+        color: $color-light;
+        padding: 1rem;
+        border: none;
+        cursor: pointer;
+        z-index: 10;
+        font-size: 1.5rem;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: rgba($color-dark, 0.7);
+        }
+
+        &:disabled {
+            background-color: rgba($color-dark, 0.2);
+            cursor: not-allowed;
+        }
+
+        &.prev {
+            left: 10px;
+        }
+
+        &.next {
+            right: 10px;
+        }
+    }
+
+    // Optional: Add slide indicators
+    .slider-indicators {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+
+        .indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba($color-light, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            &.active {
+                background-color: $color-light;
+            }
+        }
+    }
+}
+
+// Responsive adjustments
+@media (max-width: $breakpoint-medium) {
+    .hero-slider {
+        .slide {
+            height: 400px;
+        }
+    }
+}
+
+@media (max-width: $breakpoint-small) {
+    .hero-slider {
+        .slide {
+            height: 300px;
+        }
+    }
+}
+
+/* ----------------------------------------------------------------------------------- */
+
+/*                                    Search                                         */
+
+/* ----------------------------------------------------------------------------------- */
+
+/* Search Container Styling */
+.search-container {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+
+    input {
+        width: 300px;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid $color-border;
+        border-radius: 5px;
+    }
+}
+
+/* ----------------------------------------------------------------------------------- */
+
+/*                                    Gallery                                        */
+
+/* ----------------------------------------------------------------------------------- */
+
+/* --- Gallery Page Specific Styles --- */
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.course-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: $color-light;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; // Added transition for box-shadow
+    display: flex;
+    flex-direction: column;
+    
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        display: block;
+    }
+}
+
+.card-content {
+    padding: 15px;
+    flex-grow: 1;
+    display: flex; // Added for better content organization
+    flex-direction: column;
+    gap: 8px; // Consistent spacing between elements
+
+    h3 {
+        margin: 0; // Remove default margins
+        font-size: 1.1rem;
+        line-height: 1.3;
+    }
+
+    p {
+        margin: 0; // Remove default margins
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+}
+
+/* Gallery Header */
+.gallery-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    max-width: 1200px; // Match container width
+    margin: 0 auto 20px; // Center align with container
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap; // Better mobile support
+}
+
+.filter-button {
+    background-color: $color-light-grey;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease; // Smooth transition for all changes
+    font-size: 0.9rem; // Consistent text size
+
+    &:hover {
+        background-color: $color-light-grey;
+        transform: translateY(-1px); // Subtle lift effect
+    }
+}
+
+.sorting-dropdown select {
+    padding: 8px 12px; // Slightly more padding
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.9rem; // Consistent text size
+    cursor: pointer;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .gallery-container {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    .course-card img {
+        height: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-container {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 10px;
+    }
+    
+    .course-card img {
+        height: 100px;
+    }
+    
+    .gallery-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+/* ----------------------------------------------------------------------------------- */
+
+/*                                    Map                                             */
+
+/* ----------------------------------------------------------------------------------- */
+
+  #map {
+    width: 100%;
+    height: 400px;
+    border: 1px solid $color-border;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
+    overflow: hidden;
+}
+
+#map iframe {
+    border: 0;  // Remove the iframe's border
+}
+
+/* ----------------------------------------------------------------------------------- */
+
+/*                                    Gallery Card                                    */
+
+/* ----------------------------------------------------------------------------------- */
+.gallery-card {
+    @include card-style;
+    width: 280px; // Reduced from 300px
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    img {
+        width: 100%;
+        height: 160px; // Reduced from 200px
+        object-fit: cover;
+        border-bottom: 1px solid $color-border;
+        display: block;
+    }
+
+    .card-content {
+        padding: 1rem;
+        width: 100%;
+
+        h3 {
+            margin: 0.5rem 0;
+            font-size: 1.1rem; // Slightly smaller title
+        }
+    }
+}
+
+/* ----------------------------------------------------------------------------------- */
+
+/*                                    Buttons                                         */
+
+/* ----------------------------------------------------------------------------------- */
+.primary-button {
+    @include button-base; // Use @include for mixins
+
+    background-color: $color-accent;
+    color: $color-light;
+}
+
+.secondary-button {
+    @include button-base; // Use @include for mixins
+
+    background-color: $color-secondary;
+    color: $color-light;
+}
+
+/* Autocomplete Styles */
+.autocomplete-items {
+    position: absolute;
+    border: 1px solid $color-border-light;
+    border-top: none;
+    z-index: 99;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: $color-light;
+    max-height: 300px;
+    overflow-y: auto;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+
+    .autocomplete-item {
+        padding: 10px;
+        cursor: pointer;
+        background-color: $color-light;
+        border-bottom: 1px solid $color-border-light;
+        color: $color-accent; // Using your accent color for the text
+
+        &:hover {
+            background-color: $color-light-grey;
+        }
+
+        strong {
+            color: $color-primary; // Title in dark color
+        }
+
+        // Add styling for the topic text
+        .topic-text {
+            color: $color-accent; // Light blue color for topic
+            font-size: 0.9em;
+        }
+    }
+}
+
+.search-container {
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto;
+
+    input {
+        color: $color-primary; // Ensure input text is visible
+        &::placeholder {
+            color: rgba($color-primary, 0.6); // Slightly transparent for placeholder
+        }
+    }
+}
+
+// Show More Button
+#show-more-button {
+    display: block;
+    width: 120px;
+    height: 40px;
+    margin: 20px auto;
+    padding: 8px 15px;
+    font-size: 14px;
+    background-color: $color-accent; // Changed from #007bff
+    color: $color-light;
+    border: none;                    // Kept
+    border-radius: 5px;             // Kept
+    cursor: pointer;                // Kept
+
+    &:hover {
+        background-color: $color-accent-dark; // Changed from #0056b3
+    }
+}
+
+// Form elements
+.form-group {
+    input[type="text"],
+    input[type="email"],
+    textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid $color-border; // Changed from #ddd
+        border-radius: 4px;             // Kept
+        box-sizing: border-box;         // Kept
+        transition: border-color 0.3s ease;
+
+        &:focus {
+            border-color: $color-accent;
+            outline: none;
+            box-shadow: 0 0 5px rgba($color-accent, 0.5);
+        }
+    }
+}
+
+// Buttons
+.primary-button {
+    background-color: $color-accent; // Changed from hardcoded color
+    color: $color-light;
+    border: none;                    // Kept
+    padding: 10px 20px;             // Kept
+    border-radius: 4px;             // Kept
+    cursor: pointer;                // Kept
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: $color-accent-dark;
+    }
+}
+
+/* ----------------------------------------------------------------------------------- */
+
+/*                                    Course Category Pages                           */
+
+/* ----------------------------------------------------------------------------------- */
+
+/* Hero Section */
+.hero-section {
+    background-color: $color-light-grey;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h1 {
+        @include heading-style($font-size: 3rem, $margin-bottom: 1rem);
+    }
+
+    p {
+        @include text-style($font-size: 1.2rem);
+    }
+}
+
+/* Featured Courses Section */
+.featured-courses {
+    padding: 4rem 2rem;
+    background-color: $background-color;
+
+    .course-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .course-card {
+        @include card-style;
+
+        overflow: hidden;
+        transition: transform 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+        }
+
+        img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .course-content {
+            padding: 1.5rem;
+
+            h3 {
+                @include heading-style($font-size: 1.5rem, $margin-bottom: 0.5rem);
+            }
+
+            p {
+                @include text-style($font-size: 1rem, $color: $color-secondary);
+            }
+
+            .course-stats {
+                display: block;
+                margin: 1rem 0;
+
+                @include text-style($font-size: 0.9rem, $color: $color-secondary);
+            }
+        }
+    }
+}
+
+/* Why Choose Us Section */
+.why-choose-us {
+    padding: 4rem 2rem;
+
+    h2 {
+        @include heading-style;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .feature {
+        @include card-style;
+
+        text-align: center;
+        padding: 2rem;
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: $color-accent;
+        }
+
+        h3 {
+            @include heading-style($font-size: 1.2rem, $margin-bottom: 0.5rem);
+        }
+
+        p {
+            @include text-style;
+        }
+    }
+}
+
+/* Statistics Section */
+.statistics {
+    background-color: $color-accent;
+    color: $color-light;
+    padding: 4rem 2rem;
+
+    .stats-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .stat-item {
+        h3 {
+            @include heading-style($font-size: 2.5rem, $margin-bottom: 0.5rem, $color: $color-light);
+        }
+
+        p {
+            @include text-style($color: $color-light);
+        }
+    }
+}
+
+/* Call to Action Section */
+.cta-section {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: linear-gradient(rgb(0 0 0 / 70%), rgb(0 0 0 / 70%)), 
+                url('../../src/images/pug1.jpg');
+    background-size: cover;
+    background-position: center;
+    color: $color-light;
+
+    .cta-content {
+        max-width: 800px;
+        margin: 0 auto;
+
+        h2 {
+            @include heading-style($color: $color-light);
+        }
+
+        p {
+            @include text-style($color: $color-light);
+
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            @include button-base($bg-color: $color-accent);
+        }
+    }
+}
+
+/* Responsive Design */
+@media (max-width: $breakpoint-medium) {
+    .course-grid,
+    .features-grid,
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .feature {
+        padding: 1.5rem;
+    }
+    
+    .stat-item h3 {
+        font-size: 2rem;
+    }
+}
+
+/* ----------------------------------------------------------------------------------- */
+
+/*                                    Contact Page                          */
+
+/* ----------------------------------------------------------------------------------- */
+.contacts-page {
+    // Optional: Remove general padding from the body if it causes issues with header/footer
+    // padding: 2rem;
+    background-color: $color-light-grey; // Keep background if desired
+
+    // Apply padding to main content areas instead
+    > main {
+         padding: 2rem; // Add padding inside the main tag
+    }
+
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px; // Keep existing H1 style
+        font-size: 2.5rem;
+    }
+
+    /* Layout Container for side-by-side sections */
+
+    /* --- USE THE CLASS FROM YOUR HTML --- */
+    .contact-layout-container {
+        display: flex;
+        flex-wrap: wrap; // Allow wrapping on smaller screens
+        gap: 2rem; // Space between the sections
+        max-width: 1200px; // Optional: Constrain width
+        margin: 2rem auto; // Center the container and add vertical space
+
+        // Target the direct children (contact-info, contact-form)
+        > section {
+            flex: 1; // Allow sections to grow/shrink
+            min-width: 300px; // Minimum width before wrapping
+            // The individual background, border, padding, shadow etc.
+            // will come from the .contact-info / .contact-form rules below.
+        }
+
+        // Responsive stacking
+        @media (max-width: $breakpoint-medium) { // Use your existing breakpoint
+            flex-direction: column;
+            gap: 1.5rem; // Adjust gap for stacked layout
+            margin: 1rem auto; // Adjust margin
+        }
+    }
+
+    /* Contact info styling (KEEP YOUR CARD STYLES) */
+    .contact-info {
+        // Removed flex: 1; from here (handled by layout container rule)
+        padding: 20px;
+        background-color: $color-light;
+        border: 1px solid $color-border;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        // Keep your .contact-details styles (or ul/li if you used that)
+        .contact-details p { // Assuming you use <p> tags as per HTML
+            margin-bottom: 10px;
+            font-size: 1rem;
+            strong { margin-right: 5px; } // Space after label
+        }
+
+        
+    }
+
+
+    /* Contact form styling (KEEP YOUR CARD STYLES) */
+    .contact-form {
+        // Removed flex: 1; from here (handled by layout container rule)
+        padding: 20px;
+        background-color: $color-light;
+        border: 1px solid $color-border;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
+
+        h2 {
+            margin-top: 0;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        /* KEEP your form-group, label, input, textarea, button styles */
+        .form-group {
+            margin-bottom: 15px;
+
+            label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            textarea {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid $color-border;
+                border-radius: 4px;
+                box-sizing: border-box;
+                transition: border-color 0.3s ease;
+
+                &:focus {
+                    border-color: $color-accent;
+                    outline: none;
+                    box-shadow: 0 0 5px rgba($color-accent, 0.5);
+                }
+            }
+
+            textarea {
+                height: 150px;
+            }
+        }
+
+        .primary-button {
+          
+            background-color: $color-accent;
+            color: $color-light;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: $color-accent-dark; 
+            }
+        }
+
+        #form-message {
+            margin-top: 10px;
+            text-align: center;
+            color: $color-success;
+        }
+    }
+
+
+   
+    #map {
+        margin-bottom: 30px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
+        overflow: hidden;
+        height: 400px; // Keep explicit height for map iframe/container
+        max-width: 1200px; // Match container width
+        margin: 2rem auto; // Center below container
+
+        iframe { // Ensure iframe fits
+             display: block;
+             max-width: 100%;
+             height: 100%;
+             border: none; // Make iframe fill the section height
+        }
+
+        h2 { // Style map heading if you added one
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+    }
+
+    // REMOVE the old .contact-wrapper rule if it exists elsewhere
+    // .contact-wrapper { ... } // DELETE THIS
+
+} // End of .contacts-page
+
+/* ----------------------------------------------------------------------------------- */
+
+/*                                    FOOTER                          */
+
+/* ----------------------------------------------------------------------------------- */
+
+footer {
+    background-color: $color-secondary; // Use your secondary color
+    color: $color-accent; // Use your text color
+    padding: 2rem 0;
+    font-family: $font-primary; // Use your primary font
+    font-size: 0.9rem;
+
+    .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        @media (width <= 768px) {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    .footer-section {
+        margin-right: 2rem;
+    }
+
+    .footer-nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+
+        li {
+            margin-right: 1rem;
+        }
+
+        a {
+            color: $color-accent;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .social-media {
+        a {
+            display: inline-block; // Important for consistent sizing
+            margin-left: 0.5rem;
+
+            img {
+                width: 24px; // Adjust as needed
+                height: 24px; // Adjust as needed
+                vertical-align: middle; // Align with surrounding text (if any)
+                transition: transform 0.2s ease-in-out; // Add a smooth hover effect
+
+                &:hover {
+                    transform: scale(1.1); // Slightly enlarge on hover
+                }
+            }
+        }
+    }
+
+    .footer-divider{
+        border-top: 1px solid grey;
+        margin-top: 1rem;
+    }
+}
+
+
+// Modal Styles
+.modal-container {
+    display: none; // Start hidden by default
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color-dark, 0.5); // Semi-transparent overlay
+    z-index: 1000; // Ensure it's above other content
+}
+
+.modal {
+    position: relative;
+    background-color: $color-light;
+    padding: 20px;
+    max-width: 80%;
+    max-height: 90vh;
+    margin: 5vh auto;
+    overflow-y: auto;
+    border-radius: 4px;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: $color-accent-dark;
+    color: $color-light;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.modal-image {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 5px;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+h3 {
+    text-align: center;
+    font-size: 1.25rem;
+}
+
+p {
+    text-align: center;
+    font-size: 1rem;
+}
+
+.primary-button {
+    background-color: $color-accent-dark;
+    color: $color-light;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+
+    &:hover {
+        background-color: $color-light;
+    }
+}
+
+// Mobile responsiveness
+@media (width <= 768px) {
+    .modal-container {
+        .modal {
+            width: 10%;
+            padding: 10px;
+        }
+
+        .modal-image {
+            max-width: 150px;
+            max-height: 250px;
+        }
+    }
+}
+
+/* Web Development Page Specific Styles */
+.web-dev-hero {
+    background: linear-gradient(rgb(0 0 0 / 50%), rgb(0 0 0 / 50%)), 
+                url('../../src/images/pug1.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 6rem 2rem;
+    
+    .hero-content {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: $color-light; // Light gray
+            text-shadow: 2px 2px 4px rgba($color-dark, 0.3);
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: $color-light; // Slightly darker than the heading
+            text-shadow: 1px 1px 3px rgba($color-dark, 0.3);
+        }
+    }
+
+    .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin-top: 2rem;
+
+        .stat {
+            text-align: center;
+
+            .number {
+                display: block;
+                font-size: 2.5rem;
+                font-weight: bold;
+                color: $color-accent;
+            }
+
+            .label {
+                font-size: 1rem;
+                color: $color-light; // Match the heading color
+            }
+        }
+    }
+}
+
+.learning-path {
+    padding: 4rem 2rem;
+    background-color: $background-color;
+
+    .path-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .path-step {
+        @include card-style;
+
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background-color: $color-accent;
+            color: $color-light;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-weight: bold;
+        }
+
+        ul {
+            text-align: left;
+            margin-top: 1rem;
+            padding-left: 1.5rem;
+        }
+    }
+}
+
+.course-card {
+    position: relative;
+
+    .card-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background-color: $color-accent;
+        color: $color-light;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        z-index: 5;
+    }
+
+    .card-details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin: 1rem 0;
+        font-size: 0.9rem;
+
+        span {
+            background-color: rgba($color-accent, 0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            color: $color-secondary;
+        }
+    }
+}
+
+.technologies {
+    padding: 4rem 2rem;
+    background-color: $color-accent; 
+    
+    h2 {
+        color: $color-primary;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .tech-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .tech-item {
+        text-align: center;
+        padding: 1.5rem;
+        background-color: $color-light;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgb(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+        }
+
+        .tech-icon {
+            font-size: 3rem;
+            color: $color-accent-dark;
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            color: $color-primary;
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+        }
+    }
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+
+    .benefit-card {
+        @include card-style;
+
+        padding: 2rem;
+        text-align: center;
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: $color-accent;
+            margin-bottom: 1rem;
+        }
+    }
+}
+
+.success-stories {
+    padding: 4rem 2rem;
+    background-color: $background-color;
+
+    .story-card {
+        @include card-style;
+
+        padding: 2rem;
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto;
+
+        .student-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+        }
+
+        blockquote {
+            font-style: italic;
+            font-size: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .student-name {
+            font-weight: bold;
+        }
+
+        .student-role {
+            color: $color-secondary;
+        }
+    }
+}
+
+.call-to-action {
+    .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+
+        .btn-primary, .btn-secondary {
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: $color-accent;
+            color: $color-light;
+            
+            &:hover {
+                background-color: $color-accent-dark;
+                transform: translateY(-2px);
+            }
+        }
+
+        .btn-secondary {
+            background-color: $color-secondary;
+            color: $color-light;
+            
+            &:hover {
+                background-color: $color-tertiary;
+                transform: translateY(-2px);
+            }
+        }
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+        
+        .btn-primary, .btn-secondary {
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+        }
+    }
+}
+
+/* Responsive Design */
+@media (max-width: $breakpoint-medium) {
+    .hero-stats {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .path-container,
+    .tech-grid,
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+    }
+}
+
+// Add this section for data science specific styles
+.data-science {
+    .course-card {
+        img {
+            height: 200px; // Adjust this value as needed
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .modal-content {
+        img {
+            max-height: 250px; // Adjust this value as needed
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+}
+
+// For mobile responsiveness
+@media (width <= 768px) {
+    .data-science {
+        .modal-content {
+            img {
+                max-height: 200px;
+            }
+        }
+    }
+}
+
+// Add this to your existing styles
+.data-science-hero,
+.marketing-hero,
+.design-hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                url("../../src/images/pug1.jpg");
+    background-size: cover;
+    background-position: center;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    padding: 6rem 2rem;
+    
+    .hero-content {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: $color-light; // Light gray
+            text-shadow: 2px 2px 4px rgba($color-dark, 0.3);
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: $color-light; // Slightly darker than the heading
+            text-shadow: 1px 1px 3px rgba($color-dark, 0.3);
+        }
+
+        // Maintain the existing stats styling but update colors
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+
+            .stat {
+                text-align: center;
+
+                .number {
+                    display: block;
+                    font-size: 2.5rem;
+                    font-weight: bold;
+                    color: $color-accent;
+                }
+
+                .label {
+                    font-size: 1rem;
+                    color: $color-light; // Match the heading color
+                }
+            }
+        }
+    }
+}
+
+// Add responsive styles
+@media (width <= 768px) {
+    .data-science-hero,
+    .marketing-hero,
+    .design-hero {
+        min-height: 400px;
+
+        .hero-content {
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+        }
+
+        .hero-stats {
+            gap: 1.5rem;
+
+            .stat {
+                .number {
+                    font-size: 2rem;
+                }
+
+                .label {
+                    font-size: 0.9rem;
+                }
+            }
+        }
+    }
+}
+
+// Button mixins and styles
+.view-details-button {
+    @include button-base($bg-color: $color-accent);
+
+    width: 100%;
+    margin-top: 10px;
+
+    &:hover {
+        background-color: color.adjust($color-accent, $lightness: -10%);
+    }
+}
+
+.enroll-button {
+    @include button-base($bg-color: $color-accent);
+
+    width: 100%;
+    margin-top: 10px;
+
+    &:hover {
+        background-color: color.adjust($color-accent, $lightness: -10%);
+    }
+}
+
+.close-modal {
+    @include button-base($bg-color: $color-secondary);
+
+    width: 100%;
+    margin-top: 10px;
+
+    &:hover {
+        background-color: color.adjust($color-secondary, $lightness: -10%);
+    }
+}
+
+// Modal styles
+.modal-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color-dark, 0.5);
+    z-index: 1000;
+
+    &.show {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal {
+        background-color: $color-light;
+        padding: 20px;
+        border-radius: 5px;
+        max-width: 500px;
+        width: 90%;
+
+        .modal-content {
+            text-align: center;
+
+            img {
+                max-width: 100%;
+                height: auto;
+                margin-bottom: 15px;
+                max-height: 250px;
+                object-fit: cover;
+            }
+
+            h2 {
+                @include heading-style($font-size: 1.5rem, $margin-bottom: 10px);
+            }
+
+            p {
+                @include text-style($font-size: 1rem, $margin-bottom: 10px);
+            }
+        }
+    }
+}
+
+// Responsive styles for modal
+@media (max-width: $breakpoint-medium) {
+    .modal-container {
+        .modal {
+            width: 95%;
+            margin: 10px;
+            
+            .modal-content {
+                img {
+                    max-height: 200px;
+                    object-fit: cover;
+                }
+            }
+        }
+    }
+}
+
+// Data science specific modal styles
+.data-science {
+    .modal-content {
+        img {
+            max-height: 250px;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+}
+
+@media (width <= 768px) {
+    .data-science {
+        .modal-content {
+            img {
+                max-height: 200px;
+            }
+        }
+    }
+}
+
+// Course card styles
+.course-card {
+    @include card-style;
+
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: translateY(-5px);
+    }
+
+    .card-content {
+        padding: 1.5rem;
+
+        h3 {
+            @include heading-style($font-size: 1.5rem, $margin-bottom: 0.5rem);
+        }
+
+        .card-instructor {
+            @include text-style($font-size: 0.9rem, $color: $color-secondary);
+        }
+
+        .card-details {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+
+            span {
+                background-color: rgba($color-accent, 0.1);
+                padding: 0.3rem 0.8rem;
+                border-radius: 15px;
+                color: $color-secondary;
+                font-size: 0.9rem;
+            }
+        }
+
+        .card-description {
+            @include text-style($margin-bottom: 1rem);
+        }
+    }
+
+    .card-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background-color: $color-accent;
+        color: $color-light;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+    }
+}
+
+// Responsive styles
+@media (max-width: $breakpoint-medium) {
+    .modal-container {
+        .modal {
+            width: 95%;
+            margin: 10px;
+            
+            .modal-content {
+                img {
+                    max-height: 200px;
+                    object-fit: cover;
+                }
+            }
+        }
+    }
+}
+
+// Design page specific styles
+.design-hero {
+    background: linear-gradient(rgb(0 0 0 / 70%), rgb(0 0 0 / 70%)), 
+                url('../../src/images/pug2.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    padding: 6rem 2rem;
+    color: $color-light;
+    
+    .hero-content {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+    }
+
+    .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin-top: 2rem;
+
+        .stat {
+            text-align: center;
+
+            .number {
+                display: block;
+                font-size: 2.5rem;
+                font-weight: bold;
+                color: $color-accent;
+            }
+
+            .label {
+                font-size: 1rem;
+                color: $color-light;
+            }
+        }
+    }
+}
+
+@media (width <= 768px) {
+    .design-hero {
+        min-height: 400px;
+
+        .hero-content {
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+        }
+
+        .hero-stats {
+            gap: 1.5rem;
+
+            .stat {
+                .number {
+                    font-size: 2rem;
+                }
+
+                .label {
+                    font-size: 0.9rem;
+                }
+            }
+        }
+    }
+}
+
+// Marketing page specific styles
+.marketing-hero {
+    background: linear-gradient(rgb(0 0 0 / 70%), rgb(0 0 0 / 70%)), 
+                url('../../src/images/pug3.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    padding: 6rem 2rem;
+    color: $color-light;
+    
+    .hero-content {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+    }
+
+    .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin-top: 2rem;
+
+        .stat {
+            text-align: center;
+
+            .number {
+                display: block;
+                font-size: 2.5rem;
+                font-weight: bold;
+                color: $color-accent;
+            }
+
+            .label {
+                font-size: 1rem;
+                color: $color-light;
+            }
+        }
+    }
+}
+
+@media (width <= 768px) {
+    .marketing-hero {
+        min-height: 400px;
+
+        .hero-content {
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+        }
+
+        .hero-stats {
+            gap: 1.5rem;
+
+            .stat {
+                .number {
+                    font-size: 2rem;
+                }
+
+                .label {
+                    font-size: 0.9rem;
+                }
+            }
+        }
+    }
+}
+
+/* Pagination Controls Styling */
+#pagination-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+
+    .pagination-text {
+        font-size: 16px;
+        color: $color-dark;
+    }
+
+    .pagination-button {
+        padding: 8px 12px;
+        border: 1px solid $color-border;
+        background-color: $color-light;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background-color: $color-light-grey;
+        }
+
+        &.active {
+            background-color: $color-accent;
+            color: $color-light;
+            border-color: $color-accent;
+        }
+    }
+}
+
+.why-learn {
+    padding: 4rem 2rem;
+    background-color: $color-primary; // Changed to dark grey from your color variables
+    color: $color-light; // Changed text color to white for better contrast
+
+    h2 {
+        text-align: center;
+        color: $color-light;
+        margin-bottom: 3rem;
+    }
+
+    .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .benefit-card {
+        text-align: center;
+        padding: 2rem;
+        background-color: rgba($color-light, 0.1); // Semi-transparent white for cards
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: $color-accent; // Using accent color for icons
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            color: $color-light;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: $color-light;
+            opacity: 0.9; // Slightly transparent for better hierarchy
+            line-height: 1.6;
+        }
+    }
+}

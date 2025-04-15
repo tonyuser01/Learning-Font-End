@@ -1,0 +1,46 @@
+{
+  "name": "capstone-project",
+  "version": "1.0.0",
+  "description": "Front-end capstone project: An online learning platform (HTML, SCSS, TS).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile:sass": "sass src/scss:src/css",
+    "watch:sass": "sass --watch src/scss:src/css",
+    "compile:ts": "tsc",
+    "watch:ts": "tsc --watch",
+    "lint": "eslint \"**/*.ts\"",
+    "lint:fix": "eslint \"**/*.ts\" --fix",
+    "lint:css": "stylelint \"**/*.scss\"",
+    "lint:css:fix": "stylelint \"**/*.scss\" --fix",
+    "build": "npm run lint && npm run compile:sass && npm run compile:ts",
+    "dev": "npm run watch:sass & npm run watch:ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tonyuser01/Learning-Font-End.git"
+  },
+  "keywords": [],
+  "author": "Davidescu Andrei Cristian",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@eslint/css": "^0.6.0",
+    "@eslint/js": "^9.24.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.57.1",
+    "globals": "^16.0.0",
+    "sass": "^1.86.0",
+    "stylelint": "^16.17.0",
+    "stylelint-config-standard-scss": "^14.0.0",
+    "stylelint-scss": "^6.11.1",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.29.0"
+  }
+}
+
+
+
+
+

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Courses - Online Learning Platform</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div id="modal-container" class="modal-container"></div>
+    <div id="profile-modal" class="modal-container">
+        <div class="modal">
+            <div class="modal-content">
+                <h2>My Profile</h2>
+                <div id="enrolled-courses">
+                    <h3>Enrolled Courses</h3>
+                    <div id="enrolled-courses-list">
+                        <p>No courses enrolled yet.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span class="hamburger"></span>
+        </button>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="has-submenu">
+                    <a href="gallery.html">Courses</a>
+                    <ul class="submenu">
+                        <li><a href="web-development.html">Web Development</a></li>
+                        <li><a href="data-science.html">Data Science</a></li>
+                        <li><a href="design.html">Design</a></li>
+                        <li><a href="marketing.html">Marketing</a></li>
+                    </ul>
+                </li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="contacts.html">Contacts</a></li>
+                <li>
+                    <button id="profile-btn" class="profile-button">Profile</button>
+                </li>
+            </ul>
+        </nav>
+        <div class="site-title-container">
+            <h1 class="site-title">Pugs Online</h1>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="marketing-hero">
+            <div class="hero-content">
+                <h1>Marketing Courses</h1>
+                <p>Master the art of digital marketing and grow your business</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="number">1200+</span>
+                        <span class="label">Students</span>
+                    </div>
+                    <div class="stat">
+                        <span class="number">25+</span>
+                        <span class="label">Courses</span>
+                    </div>
+                    <div class="stat">
+                        <span class="number">4.9</span>
+                        <span class="label">Rating</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Courses -->
+        <section class="featured-courses">
+            <h2>Featured Marketing Courses</h2>
+            <div class="course-grid">
+                <!-- Course cards will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <!-- Why Learn Marketing -->
+        <section class="why-learn">
+            <h2>Why Learn Marketing?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">📈</div>
+                    <h3>High Demand</h3>
+                    <p>Digital marketing skills are increasingly valuable</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">💡</div>
+                    <h3>Strategic Thinking</h3>
+                    <p>Develop analytical and creative problem-solving skills</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🌍</div>
+                    <h3>Global Reach</h3>
+                    <p>Connect with audiences worldwide</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📱</div>
+                    <h3>Digital Skills</h3>
+                    <p>Master the latest digital marketing tools</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="call-to-action">
+            <div class="cta-content">
+                <h2>Ready to Master Digital Marketing?</h2>
+                <p>Join thousands of successful marketers learning with us</p>
+                <div class="cta-buttons">
+                    <a href="gallery.html" class="btn-primary">Browse Courses</a>
+                    <a href="#" class="btn-secondary">View Free Resources</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technologies You'll Master -->
+        <section class="technologies">
+            <h2>Technologies You'll Master</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <i class="tech-icon analytics"></i>
+                    <h3>Google Analytics</h3>
+                </div>
+                <div class="tech-item">
+                    <i class="tech-icon ads"></i>
+                    <h3>Google Ads</h3>
+                </div>
+                <div class="tech-item">
+                    <i class="tech-icon mailchimp"></i>
+                    <h3>Mailchimp</h3>
+                </div>
+                <div class="tech-item">
+                    <i class="tech-icon hubspot"></i>
+                    <h3>HubSpot</h3>
+                </div>
+                <div class="tech-item">
+                    <i class="tech-icon semrush"></i>
+                    <h3>SEMrush</h3>
+                </div>
+                <div class="tech-item">
+                    <i class="tech-icon hootsuite"></i>
+                    <h3>Hootsuite</h3>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Pugs Online.All rights reserved</p>
+    </footer>
+
+    <script type="module" src="../js/script.js"></script>
+    <script type="module" src="../js/marketing.js"></script>
+</body>
+
+</html>

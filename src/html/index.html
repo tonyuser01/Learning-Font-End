@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Learning Platform</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <!-- Hamburger Menu for smaller screens -->
+        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span class="hamburger"></span>
+        </button>
+
+        <!-- Main Navigation Menu -->
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="has-submenu">
+                    <a href="gallery.html">Courses</a>
+                    <ul class="submenu">
+                        <li><a href="web-development.html">Web Development</a></li>
+                        <li><a href="data-science.html">Data Science</a></li>
+                        <li><a href="design.html">Design</a></li>
+                        <li><a href="marketing.html">Marketing</a></li>
+                    </ul>
+                </li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="contacts.html">Contacts</a></li>
+                <li>
+                    <button id="profile-btn" class="profile-button">Profile</button>
+                </li>
+            </ul>
+        </nav>
+        
+        <!-- Site Title -->
+        <div class="site-title-container">
+            <h1 class="site-title">Pugs Online</h1>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="Search for courses..." aria-label="Search courses">
+            <div id="autocomplete-list" class="autocomplete-items"></div>
+            <button id="search-button" aria-label="Search">Search</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section with Image Slider -->
+        <section class="hero-slider">
+            <div class="slider-container">
+                <div class="slide">
+                    <img src="../images/pug1.jpg" alt="Promotional banner for Course A" class="center-focus">
+                </div>
+                <div class="slide">
+                    <img src="../images/pug2.jpg" alt="Highlighting benefits of learning platform" class="top-focus">
+                </div>
+                <div class="slide">
+                    <img src="../images/pug3.jpg" alt="Featured instructor profile" class="bottom-focus">
+                </div>
+            </div>
+            <!-- Add slider controls -->
+            <button class="slider-control prev" aria-label="Previous slide">❮</button>
+            <button class="slider-control next" aria-label="Next slide">❯</button>
+        </section>
+
+        <!-- Featured Courses Section -->
+        <section class="featured-courses">
+            <div class="course-grid">
+                <div class="course-card">
+                    <img src="../images/pug1.jpg" alt="Web Development Course">
+                    <div class="course-content">
+                        <h3>Web Development</h3>
+                        <p>Master HTML, CSS, and JavaScript to build modern websites</p>
+                        <span class="course-stats">1000+ students • 4.8/5 rating</span>
+                        <a href="web-development.html" class="btn-primary">Learn More</a>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <img src="../images/pug3.jpg" alt="Data Science Course">
+                    <div class="course-content">
+                        <h3>Data Science</h3>
+                        <p>Learn Python, Statistics, and Machine Learning</p>
+                        <span class="course-stats">800+ students • 4.7/5 rating</span>
+                        <a href="data-science.html" class="btn-primary">Learn More</a>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <img src="../images/pug2.jpg" alt="Design Course">
+                    <div class="course-content">
+                        <h3>UI/UX Design</h3>
+                        <p>Create beautiful and user-friendly interfaces</p>
+                        <span class="course-stats">600+ students • 4.9/5 rating</span>
+                        <a href="design.html" class="btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us Section -->
+        <section class="why-choose-us">
+            <h2>Why Choose Pugs Online?</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">★</div>
+                    <h3>Expert Instructors</h3>
+                    <p>Learn from industry professionals with years of experience</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⏰</div>
+                    <h3>Learn at Your Pace</h3>
+                    <p>Access course content 24/7 and learn on your schedule</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📜</div>
+                    <h3>Certification</h3>
+                    <p>Earn certificates upon course completion</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">👥</div>
+                    <h3>Community Support</h3>
+                    <p>Join a community of learners and get help when needed</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="statistics">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <h3>10,000+</h3>
+                    <p>Active Students</p>
+                </div>
+                <div class="stat-item">
+                    <h3>50+</h3>
+                    <p>Expert Instructors</p>
+                </div>
+                <div class="stat-item">
+                    <h3>100+</h3>
+                    <p>Courses Available</p>
+                </div>
+                <div class="stat-item">
+                    <h3>95%</h3>
+                    <p>Success Rate</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Start Your Learning Journey Today</h2>
+                <p>Join thousands of students already learning on Pugs Online</p>
+                <a href="gallery.html" class="btn-primary">Browse All Courses</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Pugs Online. All rights reserved</p>
+    </footer>
+    
+    <!-- Profile Modal -->
+    <div id="profile-modal" class="modal-container">
+        <div class="modal">
+            <div class="modal-content">
+                <h2>My Profile</h2>
+                <div id="enrolled-courses">
+                    <h3>Enrolled Courses</h3>
+                    <div id="enrolled-courses-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="../js/script.js"></script>
+    <script type="module" src="../js/profile.js"></script>
+</body>
+</html>
